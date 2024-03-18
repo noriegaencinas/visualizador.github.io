@@ -440,11 +440,15 @@ function iniciar() {
 }
 
 function partidas() {
+  iniciar()
   var ta = document.getElementById("textarea1");
   var selected_item = document.getElementById("Combo").value;
   let file_path = "";
 
   switch (selected_item) {
+    case "0":
+      file_path = "files/empty.txt";
+      break;
     case "1":
       file_path = "files/partida1.txt"
       break;
@@ -462,7 +466,7 @@ function partidas() {
   xhr.open('GET', file_path, true);
   xhr.onreadystatechange = function () {
     if (xhr.readyState === 4 && xhr.status === 200) {
-    ta.value = xhr.responseText; // Aquí puedes trabajar con el contenido del archivo
+      ta.value = xhr.responseText; // Aquí puedes trabajar con el contenido del archivo
     }
   };
   xhr.send();
