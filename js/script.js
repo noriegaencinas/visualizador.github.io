@@ -31,27 +31,27 @@ function colocar_piezas() {
   for (let col = 0; col < 8; col++) {
     const letters = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'];
     const white_id = letters[col] + 2;
-    document.getElementById(white_id).style.backgroundImage = 'url("/img/PeonB.png")';
+    document.getElementById(white_id).style.backgroundImage = 'url("img/PeonB.png")';
     const black_id = letters[col] + 7;    
-    document.getElementById(black_id).style.backgroundImage = 'url("/img/PeonN.png")';
+    document.getElementById(black_id).style.backgroundImage = 'url("img/PeonN.png")';
   }
-  document.getElementById('a1').style.backgroundImage = 'url("/img/TorreB.png")';
-  document.getElementById('b1').style.backgroundImage = 'url("/img/CaballoB.png")';
-  document.getElementById('c1').style.backgroundImage = 'url("/img/AlfilB.png")';
-  document.getElementById('d1').style.backgroundImage = 'url("/img/ReinaB.png")';
-  document.getElementById('e1').style.backgroundImage = 'url("/img/ReyB.png")';
-  document.getElementById('f1').style.backgroundImage = 'url("/img/AlfilB.png")';
-  document.getElementById('g1').style.backgroundImage = 'url("/img/CaballoB.png")';
-  document.getElementById('h1').style.backgroundImage = 'url("/img/TorreB.png")';
+  document.getElementById('a1').style.backgroundImage = 'url("img/TorreB.png")';
+  document.getElementById('b1').style.backgroundImage = 'url("img/CaballoB.png")';
+  document.getElementById('c1').style.backgroundImage = 'url("img/AlfilB.png")';
+  document.getElementById('d1').style.backgroundImage = 'url("img/ReinaB.png")';
+  document.getElementById('e1').style.backgroundImage = 'url("img/ReyB.png")';
+  document.getElementById('f1').style.backgroundImage = 'url("img/AlfilB.png")';
+  document.getElementById('g1').style.backgroundImage = 'url("img/CaballoB.png")';
+  document.getElementById('h1').style.backgroundImage = 'url("img/TorreB.png")';
 
-  document.getElementById('a8').style.backgroundImage = 'url("/img/TorreN.png")';
-  document.getElementById('b8').style.backgroundImage = 'url("/img/CaballoN.png")';
-  document.getElementById('c8').style.backgroundImage = 'url("/img/AlfilN.png")';
-  document.getElementById('d8').style.backgroundImage = 'url("/img/ReinaN.png")';
-  document.getElementById('e8').style.backgroundImage = 'url("/img/ReyN.png")';
-  document.getElementById('f8').style.backgroundImage = 'url("/img/AlfilN.png")';
-  document.getElementById('g8').style.backgroundImage = 'url("/img/CaballoN.png")';
-  document.getElementById('h8').style.backgroundImage = 'url("/img/TorreN.png")';
+  document.getElementById('a8').style.backgroundImage = 'url("img/TorreN.png")';
+  document.getElementById('b8').style.backgroundImage = 'url("img/CaballoN.png")';
+  document.getElementById('c8').style.backgroundImage = 'url("img/AlfilN.png")';
+  document.getElementById('d8').style.backgroundImage = 'url("img/ReinaN.png")';
+  document.getElementById('e8').style.backgroundImage = 'url("img/ReyN.png")';
+  document.getElementById('f8').style.backgroundImage = 'url("img/AlfilN.png")';
+  document.getElementById('g8').style.backgroundImage = 'url("img/CaballoN.png")';
+  document.getElementById('h8').style.backgroundImage = 'url("img/TorreN.png")';
 }
 
 function limpiarTablero() {
@@ -69,9 +69,11 @@ function seleccionar_partida() {
   var selected_item = document.getElementById("select_partida").value;
 
   let file_path = "";
+  var parrafo = document.getElementById("flag_visual");
   switch (selected_item) {
     case "0":
       file_path = "files/empty.txt";
+      parrafo.setAttribute("disabled", true);
       break;
     case "1":
       file_path = "files/partida1.txt";
