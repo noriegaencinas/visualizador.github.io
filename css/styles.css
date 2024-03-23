@@ -1,0 +1,102 @@
+#container {
+    display: flex;
+    justify-content: center; /* Centra el contenido horizontalmente */
+}
+
+#chessboard {
+    width: 600px;
+    height: 600px;
+    display: flex;
+    flex-wrap: wrap;       
+    margin-right: 20px; /* Ajusta el margen derecho para separar el tablero del textarea */ 
+    margin-bottom: 0px; /* Ajusta el margen derecho para separar el tablero del textarea */ 
+    margin-left: 10px;
+}
+  
+.square {
+    width: 75px;
+    height: 75px;
+}
+
+.black {
+    background-color: #765827;
+}
+  
+.white {
+    background-color: #EAC696;
+}
+
+h1 {
+    font-size: 24px;
+    margin-bottom: 20px;
+    color: #333;
+    text-align: center;
+}
+
+button {
+    display: flex;
+    padding: 8px 20px;
+    font-size: 16px;
+    border-radius: 5px;
+    border: none;
+    background-color: #8D7B68;
+    color: white;
+    cursor: pointer;
+    margin-right: 20px;
+}
+
+button:hover {
+    background-color: #3C2A21;
+}
+
+select {
+    display: flex;
+    padding: 8px;
+    font-size: 16px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    margin-right: 10px;
+}
+
+textarea {
+    padding: 10px;
+    font-size: 16px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    width: 320px;
+}
+
+input {
+    display: flex;
+}
+
+#top_informacion {
+    display: flex; /* Utiliza flexbox */
+    align-items: center; /* Alinea verticalmente los elementos */
+}
+
+#bottom_left_div {
+    display: flex; /* Utiliza flexbox */
+    justify-content: center;    
+    align-items: center; /* Alinea verticalmente los elementos */
+}
+
+#bottom_informacion {
+    display: flex; /* Utiliza flexbox */
+}
+
+.square {    
+    background-size: cover; /* Ajusta la imagen para cubrir completamente el cuadrado */
+}
+
+.p_filas {
+    display: flex;
+    font-size: large;
+    height: 60px;
+}
+
+.p_columna {
+    margin-left: 25px;
+    display: inline-block;
+    width: 50px;
+}
