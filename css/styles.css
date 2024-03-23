@@ -81,6 +81,11 @@ input {
     align-items: center; /* Alinea verticalmente los elementos */
 }
 
+#flag_visual {
+    font-size: 16px;
+    text-align: center;
+}
+
 #bottom_informacion {
     display: flex; /* Utiliza flexbox */
 }
