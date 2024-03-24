@@ -309,9 +309,26 @@ function compararFondoDeImagen(idElemento, urlImagen) {
   // Obtener el valor de la propiedad 'background-image' del estilo computado del elemento
   var backgroundImageValue = window.getComputedStyle(idElemento).getPropertyValue('background-image');
 
-  backgroundImageValue = backgroundImageValue.replace(/^url\("http:\/\/\d+\.\d+\.\d+\.\d+:3000/, 'url("'); // Elimina la parte de la IP
+  urlImagen = limpiarURL(urlImagen)
+  backgroundImageValue = limpiarURL(backgroundImageValue)
+  
+  return backgroundImageValue == urlImagen
+}
 
-  return urlImagen == backgroundImageValue;
+function limpiarURL(url) {
+  // Encuentra la última aparición de "/" en la URL
+  const ultimaBarraIndex = url.lastIndexOf('/');
+
+  // Corta la cadena a partir de la última barra hasta el final
+  const nombreConExtension = url.substring(ultimaBarraIndex + 1);
+
+  // Encuentra la última aparición de "." en el nombre del archivo
+  const puntoIndex = nombreConExtension.lastIndexOf('.');
+
+  // Corta la cadena desde el inicio hasta antes de la última aparición del punto
+  const nombreSinExtension = nombreConExtension.substring(0, puntoIndex);
+
+  return nombreSinExtension;
 }
 
 //introduciendo el id de un square permite mover la pieza hacia otro id tambien proveido
