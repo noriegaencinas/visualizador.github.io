@@ -59,12 +59,16 @@ function limpiarTablero() {
   squares.forEach(function(square) {
     square.style.backgroundImage = "none";
   }); 
+  prueba = document.getElementById("paraPruebas");
+  prueba.textContent = ""; 
+  boton_completar(0);
 }
 
 // permite seleccionar de las partidas prestablecidas en el programa
 function seleccionar_partida() {
   limpiarTablero();
   colocar_piezas();
+  boton_reiniciar();
   var ta = document.getElementById("movimientos");
   var selected_item = document.getElementById("select_partida").value;
 
@@ -125,14 +129,6 @@ function boton_pasos() {
   celda_final = jugada_actual;
   celda_final = obtener_celda_final(celda_final);  // no funciona cuando son promociones | quita mayusculas, x, +, # y letra extra cuando peon captura
 
-  
-  //contexto de captura ejemplo exd5
-  if (jugada_actual.includes('x')) {
-    let algo = jugada_actual.split('x');
-    let detalles_inicio = algo[0];
-    let detalles_final = algo[1];
-  }  
-
   let pieza_actual = "";
 
   // estas son jugadas muy especificas
@@ -175,7 +171,7 @@ function boton_pasos() {
     if (turno == 'blancas'){
       for (let i = fila; i >= 1; i--) {      
         celda_inicial = columna + i; //i es la fila en este caso                
-        if (compararFondoDeImagen(celda_inicial,'url(/img/PeonB.png)')) {
+        if (compararFondoDeImagen(celda_inicial,'url(img/PeonB.png)')) {
           mover_pieza(celda_inicial, celda_final);
         }
       }   
@@ -183,7 +179,7 @@ function boton_pasos() {
     else{
       for (let index = parseInt(fila); index <= 8; index++) {
         celda_inicial = columna + index;
-        if (compararFondoDeImagen(celda_inicial,'url(/img/PeonN.png)')) {
+        if (compararFondoDeImagen(celda_inicial,'url(img/PeonN.png)')) {
           mover_pieza(celda_inicial, celda_final);
         }
       }   
@@ -192,49 +188,127 @@ function boton_pasos() {
 
   if (jugada_actual.startsWith('B')){
     pieza_actual = "Alfil";
+    
+    var elemento = document.getElementById(celda_final);
+    // Verificar si el elemento pertenece a la clase específica
+    if (elemento.classList.contains("white")) {
+      //console.log("El elemento pertenece a la clase white");
+      debe_ser = "white";
+    } else {
+      //console.log("El elemento pertenece a la clase black");
+      debe_ser = "black";
+    }
     if (turno == 'blancas'){   
+      lista_alfiles = recorrerCuadrosBuscando('url(img/AlfilB.png)');
+      for (var i = 0; i < lista_alfiles.length; i++) {
+        elemento = document.getElementById(lista_alfiles[i])
+        if (elemento.classList.contains(debe_ser)){
+          mover_pieza(lista_alfiles[i], celda_final);          
+        }
+      }    
     }
     else{ // turno negras  
-      
+      lista_alfiles = recorrerCuadrosBuscando('url(img/AlfilN.png)');
+      for (var i = 0; i < lista_alfiles.length; i++) {
+        elemento = document.getElementById(lista_alfiles[i])
+        if (elemento.classList.contains(debe_ser)){
+          mover_pieza(lista_alfiles[i], celda_final);          
+        }
+      } 
     }
-
   }
 
   if (jugada_actual.startsWith('N')){ // Nf3 Nc6 |  Nxf7
-    pieza_actual = "Caballo";
-    if (turno == 'blancas'){   
+    pieza_actual = "Caballo";    
+    if (turno == 'blancas'){ 
+      lista_c = [];
+      lista_caballos = recorrerCuadrosBuscando('url(img/CaballoB.png)');                  
+      movimientos_posibles = obtenerMovimientosCaballo(celda_final);
+      console.log(lista_caballos + " | " + movimientos_posibles)
+      for (let i = 0; i < lista_caballos.length; i++) {
+        for (let j = 0; j < movimientos_posibles.length; j++) {
+          if (lista_caballos[i] == movimientos_posibles[j]){
+            lista_c.push(lista_caballos[i])
+          }
+        }
+      }
+      mover_pieza(lista_c[0], celda_final);
     }
     else{ // turno negras  
-      
+      lista_c = [];
+      lista_caballos = recorrerCuadrosBuscando('url(img/CaballoN.png)');                  
+      movimientos_posibles = obtenerMovimientosCaballo(celda_final);
+      for (let i = 0; i < lista_caballos.length; i++) {
+        for (let j = 0; j < movimientos_posibles.length; j++) {
+          if (lista_caballos[i] == movimientos_posibles[j]){
+            lista_c.push(lista_caballos[i])
+          }
+        }
+      }
+      mover_pieza(lista_c[0], celda_final);
     }
   }
 
-  if (jugada_actual.startsWith('R')){
+  if (jugada_actual.startsWith('R')){ //  R d5. Ra d5. Rax d5.
     pieza_actual = "Torre";
+
     if (turno == 'blancas'){   
+      lista_torres = recorrerCuadrosBuscando('url(img/TorreB.png)'); //devuelve la lista de los ID de donde hay torres blancas
+      posible_torre = [];
+      for (var i = 0; i < lista_torres.length; i++) {
+        celda = lista_torres[i];
+        //elemento = document.getElementById(lista_torres[i])
+        console.log("hay via libre?" + viaLibre(celda, celda_final))
+        if (viaLibre(celda, celda_final)) {          
+          posible_torre.push(celda)
+        }              
+      }
+      if (posible_torre.length > 1) {        
+      }
+      else{ 
+        mover_pieza(posible_torre[0], celda_final);   
+      }
     }
     else{ // turno negras  
-      
+      lista_torres = recorrerCuadrosBuscando('url(img/TorreN.png)'); //devuelve la lista de los ID de donde hay torres blancas
+      posible_torre = [];
+      for (var i = 0; i < lista_torres.length; i++) {
+        celda = lista_torres[i];
+        //elemento = document.getElementById(lista_torres[i])
+        console.log("hay via libre?" + viaLibre(celda, celda_final))
+        if (viaLibre(celda, celda_final)) {          
+          posible_torre.push(celda)
+        }              
+      }
+      if (posible_torre.length > 1) {        
+      }
+      else{ 
+        mover_pieza(posible_torre[0], celda_final);   
+      }
     }
   }
 
-  if (jugada_actual.startsWith('Q')){
+  if (jugada_actual.startsWith('Q')){ // Qd4 | Qxd4
     pieza_actual = "Dama";
-    if (turno == 'blancas'){   
+    if (turno == 'blancas'){
+      lista_dama = recorrerCuadrosBuscando('url(img/ReinaB.png)');
+      mover_pieza(lista_dama[0], celda_final);
     }
     else{ // turno negras  
-      
+      lista_dama = recorrerCuadrosBuscando('url(img/ReinaN.png)');
+      mover_pieza(lista_dama[0], celda_final);
     }
   }
 
   if (jugada_actual.startsWith('K')){    
     pieza_actual = "Rey";
     if (turno == 'blancas'){   
+      celda_inicial = recorrerCuadrosBuscando('url(img/ReyB.png)');      
     }
     else{ // turno negras  
-      
+      celda_inicial = recorrerCuadrosBuscando('url(img/ReyN.png)');      
     }
-    
+    mover_pieza(celda_inicial[0], celda_final);
 
   }
 
@@ -247,20 +321,129 @@ function boton_pasos() {
   //Testing
   prueba = document.getElementById("paraPruebas");
   num_jugada = num_jugada + 1; //para mejor vision
-  prueba.textContent = "Jugada #" + num_jugada + " " + lista_jugadas[num_jugada-1] + " <> " + pieza_actual + " " + turno + " Se mueve a " + celda_final;
+  let = informacion = "Jugada #" + num_jugada + " " + lista_jugadas[num_jugada-1] + " <> " + pieza_actual + " " + turno + " Se mueve a " + celda_final
+  prueba.textContent = informacion;
+  console.log(informacion)
 }
 
-function recorrerCuadros() {
+function recorrerCuadrosBuscando(urlImagen) {
   const squares = document.querySelectorAll(".square"); // Obtener todos los cuadros
-  
+  let lista = [];
   // Recorrer cada cuadro
-  squares.forEach(function(square) {
-    // Realizar alguna acción en cada cuadro
-    console.log("Cuadro ID:", square.id);
-    console.log("Clases:", square.classList);
-    // Agregar más acciones aquí según sea necesario
-  });
+  for (const square of squares) {
+    flag = compararFondoDeImagen(square.id, urlImagen);   
+    if (flag == true) {      
+      //console.log("LA ENCONTRE " + square.id);
+      lista.push(square.id)
+      //return square.id; // Salir de la función y devolver el ID encontrado
+    }
+  }
+  // Si no se encuentra, devolver algo significativo, como null
+  return lista;
 }
+
+function viaLibre(celda, celda_final){
+  console.log("entro a la funcion")
+  
+  const letters = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'];
+
+  let columna = celda_final[0];
+  let fila = celda_final[1];
+
+  c_inicial = celda[0];
+  f_inicial = celda[1];
+  if (c_inicial == columna) {//comparten columna    
+    console.log("tienen columnas iguales")
+    //posible_torre.push(celda);
+    if (f_inicial < fila){ //abajo a arriba
+      let flag = true;
+      for (let index = parseInt(f_inicial)+1; index < fila; index++) {
+        celda_comparacion = columna + index;
+        if (compararFondoDeImagen(celda_comparacion, "") == false) {
+          flag=false;
+        }
+      }
+      return flag
+    }
+    else{ // arriba a abajo
+      let flag = true;
+      for (let index = parseInt(fila)-1; index > f_inicial; index--) {
+        celda_comparacion = columna + index;
+        if (compararFondoDeImagen(celda_comparacion, "") == false) {
+          flag=false; 
+        }
+      }
+      return flag
+    }
+  }
+  
+  if (f_inicial == fila) {//comparten fila
+    //posible_torre.push(celda);
+    console.log("tienen filas iguales")
+    let a = letters.indexOf(c_inicial);
+    let b = letters.indexOf(columna);
+    if (Math.abs(a - b) == 1) {
+      return true; 
+    }
+    else if (a < b){ //izquierda a derecha
+      let flag = true;
+      for (let index = parseInt(a)+1; index < b; index++) {
+        celda_comparacion = letters[index] + fila;
+        if (compararFondoDeImagen(celda_comparacion, "") == false) {          
+          flag=false;
+        }        
+      }
+      return flag;
+    }
+    else{ // derecha a izquierda
+      let flag = true;
+      for (let index = parseInt(b)-1; index > a; index--) {
+        celda_comparacion = letters[index] + fila;
+        if (compararFondoDeImagen(celda_comparacion, "") == false) {
+          flag=false; 
+        }
+      }
+      return flag;
+    }
+  }
+  return false;
+}
+
+function obtenerMovimientosCaballo(posicion) {
+  // Convertir la posición a coordenadas numéricas
+  let columna = posicion.charCodeAt(0) - 97; // Convertir letra de la columna a número (de 'a' a 0, 'b' a 1, etc.)
+  let fila = 8 - parseInt(posicion[1]); // Convertir número de fila a número (de '8' a 0, '7' a 1, etc.)
+  
+  // Definir movimientos relativos del caballo
+  const movimientos = [
+      [-2, -1], [-2, 1], // Movimientos hacia arriba
+      [-1, -2], [1, -2], // Movimientos hacia la izquierda
+      [2, -1], [2, 1], // Movimientos hacia abajo
+      [-1, 2], [1, 2] // Movimientos hacia la derecha
+  ];
+  
+  // Almacenar las posiciones válidas
+  let movimientosValidos = [];
+  
+  // Calcular las nuevas posiciones
+  for (let movimiento of movimientos) {
+      let nuevaColumna = columna + movimiento[0];
+      let nuevaFila = fila + movimiento[1];
+      
+      // Verificar si la nueva posición está dentro del tablero
+      if (nuevaColumna >= 0 && nuevaColumna <= 7 && nuevaFila >= 0 && nuevaFila <= 7) {
+          // Convertir las coordenadas numéricas a notación de celda de ajedrez
+          let nuevaPosicion = String.fromCharCode(97 + nuevaColumna) + (8 - nuevaFila);
+          movimientosValidos.push(nuevaPosicion);
+      }
+  }
+  
+  return movimientosValidos;
+}
+
+// Ejemplo de uso:
+let movimientos = obtenerMovimientosCaballo("d4");
+console.log("Los movimientos válidos del caballo son:", movimientos);
 
 function obtener_celda_final(texto) {
   // Utilizar una expresión regular para eliminar las mayúsculas, 'x', '+', y '#'  
@@ -297,7 +480,7 @@ function remover_numeros_conid(id) {
   return texto;
 }
 
-function compararFondoDeImagen(idElemento, urlImagen) {  
+function compararFondoDeImagen(idElemento, urlImagen) {  //id donde buscar y url que se esta buscando -> devuelve si la comparacion fue correcta
 
   var idElemento = document.getElementById(idElemento);
 
@@ -312,6 +495,9 @@ function compararFondoDeImagen(idElemento, urlImagen) {
   urlImagen = limpiarURL(urlImagen)
   backgroundImageValue = limpiarURL(backgroundImageValue)
   
+  //console.log("imagen encontrada " + urlImagen)
+  //console.log("imagen que se esta buscando " + backgroundImageValue)
+
   return backgroundImageValue == urlImagen
 }
 
@@ -342,10 +528,15 @@ function mover_pieza(from_id, to_id){
 }
 
 
-// botón para visualizar la partida de ajedrez completa con un delay especifico
-function boton_completar() {
-  remover_numeros();
-
+let intervalo; // Definir intervalo en un alcance más amplio
+function boton_completar(parar) {
+  if (parar !== 0) {
+    intervalo = setInterval(function() {
+      boton_pasos();
+    }, 1000);
+  } else {
+    clearInterval(intervalo);
+  }
 }
 
 // permite agregar una partida desde la computadora del usuario
