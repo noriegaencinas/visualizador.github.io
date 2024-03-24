@@ -31,27 +31,27 @@ function colocar_piezas() {
   for (let col = 0; col < 8; col++) {
     const letters = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'];
     const white_id = letters[col] + 2;
-    document.getElementById(white_id).style.backgroundImage = url("img/PeonB.png");
+    document.getElementById(white_id).style.backgroundImage = 'url(img/PeonB.png)';
     const black_id = letters[col] + 7;    
-    document.getElementById(black_id).style.backgroundImage = url("img/PeonN.png");
+    document.getElementById(black_id).style.backgroundImage = 'url(img/PeonN.png)';
   }
-  document.getElementById('a1').style.backgroundImage = url("img/TorreB.png");
-  document.getElementById('b1').style.backgroundImage = url("img/CaballoB.png");
-  document.getElementById('c1').style.backgroundImage = url("img/AlfilB.png");
-  document.getElementById('d1').style.backgroundImage = url("img/ReinaB.png");
-  document.getElementById('e1').style.backgroundImage = url("img/ReyB.png");
-  document.getElementById('f1').style.backgroundImage = url("img/AlfilB.png");
-  document.getElementById('g1').style.backgroundImage = url("img/CaballoB.png");
-  document.getElementById('h1').style.backgroundImage = url("img/TorreB.png");
+  document.getElementById('a1').style.backgroundImage = 'url(img/TorreB.png)';
+  document.getElementById('b1').style.backgroundImage = 'url(img/CaballoB.png)';
+  document.getElementById('c1').style.backgroundImage = 'url(img/AlfilB.png)';
+  document.getElementById('d1').style.backgroundImage = 'url(img/ReinaB.png)';
+  document.getElementById('e1').style.backgroundImage = 'url(img/ReyB.png)';
+  document.getElementById('f1').style.backgroundImage = 'url(img/AlfilB.png)';
+  document.getElementById('g1').style.backgroundImage = 'url(img/CaballoB.png)';
+  document.getElementById('h1').style.backgroundImage = 'url(img/TorreB.png)';
 
-  document.getElementById('a8').style.backgroundImage = url("img/TorreN.png");
-  document.getElementById('b8').style.backgroundImage = url("img/CaballoN.png");
-  document.getElementById('c8').style.backgroundImage = url("img/AlfilN.png");
-  document.getElementById('d8').style.backgroundImage = url("img/ReinaN.png");
-  document.getElementById('e8').style.backgroundImage = url("img/ReyN.png");
-  document.getElementById('f8').style.backgroundImage = url("img/AlfilN.png");
-  document.getElementById('g8').style.backgroundImage = url("img/CaballoN.png");
-  document.getElementById('h8').style.backgroundImage = url("img/TorreN.png");
+  document.getElementById('a8').style.backgroundImage = 'url(img/TorreN.png)';
+  document.getElementById('b8').style.backgroundImage = 'url(img/CaballoN.png)';
+  document.getElementById('c8').style.backgroundImage = 'url(img/AlfilN.png)';
+  document.getElementById('d8').style.backgroundImage = 'url(img/ReinaN.png)';
+  document.getElementById('e8').style.backgroundImage = 'url(img/ReyN.png)';
+  document.getElementById('f8').style.backgroundImage = 'url(img/AlfilN.png)';
+  document.getElementById('g8').style.backgroundImage = 'url(img/CaballoN.png)';
+  document.getElementById('h8').style.backgroundImage = 'url(img/TorreN.png)';
 }
 
 function limpiarTablero() {
@@ -175,7 +175,7 @@ function boton_pasos() {
     if (turno == 'blancas'){
       for (let i = fila; i >= 1; i--) {      
         celda_inicial = columna + i; //i es la fila en este caso                
-        if (compararFondoDeImagen(celda_inicial,'url("/img/PeonB.png")')) {
+        if (compararFondoDeImagen(celda_inicial,'url(/img/PeonB.png)')) {
           mover_pieza(celda_inicial, celda_final);
         }
       }   
@@ -183,7 +183,7 @@ function boton_pasos() {
     else{
       for (let index = parseInt(fila); index <= 8; index++) {
         celda_inicial = columna + index;
-        if (compararFondoDeImagen(celda_inicial,'url("/img/PeonN.png")')) {
+        if (compararFondoDeImagen(celda_inicial,'url(/img/PeonN.png)')) {
           mover_pieza(celda_inicial, celda_final);
         }
       }   
