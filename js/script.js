@@ -322,7 +322,9 @@ function boton_pasos() {
   prueba = document.getElementById("paraPruebas");
   num_jugada = num_jugada + 1; //para mejor vision
   let = informacion = "Jugada #" + num_jugada + " " + lista_jugadas[num_jugada-1] + " <> " + pieza_actual + " " + turno + " Se mueve a " + celda_final
-  prueba.textContent = informacion;
+  if (jugada_actual != null && jugada_actual != "") {
+    prueba.textContent = informacion;
+  }
   console.log(informacion)
 }
 
