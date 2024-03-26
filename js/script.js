@@ -531,13 +531,16 @@ function mover_pieza(from_id, to_id){
 
 
 let intervalo; // Definir intervalo en un alcance más amplio
-function boton_completar(parar) {
-  if (parar !== 0) {
+let esta_activo = false;
+function boton_completar(parar) {  
+  if (parar !== 0 && esta_activo == false) { // si queremos que se ejecute
     intervalo = setInterval(function() {
       boton_pasos();
     }, 1000);
-  } else {
-    clearInterval(intervalo);
+    esta_activo = true;
+  } else { // si lo queremos parar
+    clearInterval(intervalo);  
+    esta_activo = false;
   }
 }
 
